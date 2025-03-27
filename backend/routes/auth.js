@@ -56,47 +56,38 @@ router.post('/register', async (req, res) => {
 });
 
 // Login user
-router.post('/login', async (req, res) => {
-  const { email, password } = req.body;
-
-  try {
-    // Check if the user exists
-    let user = await User.findOne({ email });
-
-    if (!user) {
-      return res.status(400).json({ msg: 'Invalid credentials' });
-    }
-
-    // Check if the password matches
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      return res.status(400).json({ msg: 'Invalid credentials' });
-    }
-
-    // Create JWT payload
-    const payload = { user: { id: user.id } };
-
-    // Generate JWT token
-    jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' }, (err, token) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).json({ msg: 'Server error' });
+router.post("/login", async (req, res) => {
+    const { email, password } = req.body;
+  
+    try {
+      // Find the user by email
+      const user = await User.findOne({ email });
+  
+      if (!user) {
+        return res.status(400).json({ msg: "Invalid credentials" });
       }
-
-      // Set JWT as an HttpOnly cookie
-      res.cookie('token', token, { 
-        httpOnly: true, 
-        secure: process.env.NODE_ENV === 'production',
-        maxAge: 3600000,
-      });
-
-      res.json({ msg: 'Login successful' });
-    });
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server error');
-  }
-});
+  
+      // Log the hashed password from the DB and the password being checked
+      console.log("Stored Hash:", user.password);
+      console.log("Password Attempt:", password);
+  
+      // Check if the provided password matches the stored hashed password
+      const isMatch = await user.matchPassword(password);
+      console.log("Password Match Result:", isMatch);
+  
+      if (!isMatch) {
+        return res.status(400).json({ msg: "Invalid credentials" });
+      }
+  
+      // If match, generate JWT token and send response
+      const token = generateToken(user._id);
+      res.json({ token });
+  
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).json({ msg: "Server error" });
+    }
+  });
 
 console.log('Auth routes loaded');  // Logs to ensure the file is loaded correctly
 

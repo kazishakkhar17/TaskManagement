@@ -1,7 +1,8 @@
 // routes/task.js
 const express = require('express');
 const Task = require('../models/Task');
-const authMiddleware = require('../middleware/auth');
+const authMiddleware = require('../middleware/authMiddleware');  // Correct path
+
 const router = express.Router();
 
 // Create task

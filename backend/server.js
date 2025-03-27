@@ -21,6 +21,8 @@ app.use(cors({
 // Import and use auth routes
 app.use('/auth', require('./routes/auth'));
 
+app.use('/api/task', require('./routes/task'));
+
 // Test route to check server health
 app.get("/test", (req, res) => {
   res.send("Server is running!");
