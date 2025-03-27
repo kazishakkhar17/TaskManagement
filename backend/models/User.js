@@ -1,4 +1,3 @@
-// models/User.js
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
@@ -8,21 +7,25 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
+    trim: true, 
   },
   email: {
     type: String,
     required: true,
     unique: true,
+    match: [/\S+@\S+\.\S+/, 'Please enter a valid email address'],  // Email validation regex
   },
   password: {
     type: String,
     required: true,
+    minlength: 6, 
   },
   role: {
     type: String,
     default: 'user', // Default role is "user"
+    enum: ['user', 'admin'],  //   : limit roles to only 'user' or 'admin'
   },
-});
+}, { timestamps: true });  //   : Adds `createdAt` and `updatedAt` fields
 
 // Encrypt password before saving
 userSchema.pre('save', async function(next) {
