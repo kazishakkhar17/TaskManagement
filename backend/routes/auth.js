@@ -1,4 +1,3 @@
-// routes/auth.js
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
@@ -10,25 +9,45 @@ router.post('/register', async (req, res) => {
   const { username, email, password } = req.body;
 
   try {
+    // Check if the user already exists
     let user = await User.findOne({ email });
 
     if (user) {
       return res.status(400).json({ msg: 'User already exists' });
     }
 
+    // Hash password before saving
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    // Create new user
     user = new User({
       username,
       email,
-      password,  // No need to hash the password here
+      password: hashedPassword,  // Store hashed password
     });
 
+    // Save user to the database
     await user.save();
+
+    // Create JWT payload
     const payload = { user: { id: user.id } };
 
     // Generate JWT token
     jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' }, (err, token) => {
-      if (err) throw err;
-      res.json({ token });
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ msg: 'Server error' });
+      }
+
+      // Set JWT as an HttpOnly cookie
+      res.cookie('token', token, { 
+        httpOnly: true, // Prevent access to cookie via JS
+        secure: process.env.NODE_ENV === 'production', // Only use secure cookies in production (HTTPS)
+        maxAge: 3600000, // Cookie expiration in 1 hour
+      });
+
+      res.json({ msg: 'Registration successful' });
     });
   } catch (err) {
     console.error(err.message);
@@ -41,28 +60,44 @@ router.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
   try {
+    // Check if the user exists
     let user = await User.findOne({ email });
 
     if (!user) {
       return res.status(400).json({ msg: 'Invalid credentials' });
     }
 
-    const isMatch = await user.matchPassword(password);
+    // Check if the password matches
+    const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(400).json({ msg: 'Invalid credentials' });
     }
 
+    // Create JWT payload
     const payload = { user: { id: user.id } };
 
     // Generate JWT token
     jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' }, (err, token) => {
-      if (err) throw err;
-      res.json({ token });
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ msg: 'Server error' });
+      }
+
+      // Set JWT as an HttpOnly cookie
+      res.cookie('token', token, { 
+        httpOnly: true, 
+        secure: process.env.NODE_ENV === 'production',
+        maxAge: 3600000,
+      });
+
+      res.json({ msg: 'Login successful' });
     });
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
   }
 });
+
+console.log('Auth routes loaded');  // Logs to ensure the file is loaded correctly
 
 module.exports = router;
