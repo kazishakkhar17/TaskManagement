@@ -10,6 +10,7 @@ const TaskList = () => {
   const [filterPriority, setFilterPriority] = useState('all'); // For filtering by priority
   const [filterCategory, setFilterCategory] = useState('all'); // For filtering by category
   const [sort, setSort] = useState('dueDate'); // Default sort by due date
+  const [searchQuery, setSearchQuery] = useState(''); // State for search query
 
   // Fetch Tasks
   const fetchTasks = async () => {
@@ -83,10 +84,19 @@ const TaskList = () => {
     setFilterCategory(e.target.value);
   };
 
-  // Apply filtering and sorting
-  const sortedTasks = tasks
+  // Handle search input change
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  // Apply filtering, searching, and sorting
+  const filteredTasks = tasks
     .filter((task) => (filterPriority === 'all' ? true : task.priority === filterPriority))
     .filter((task) => (filterCategory === 'all' ? true : task.category === filterCategory))
+    .filter((task) => {
+      return task.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+             task.description.toLowerCase().includes(searchQuery.toLowerCase());
+    })
     .sort((a, b) => {
       if (sort === 'priority') {
         const priorities = { low: 1, medium: 2, high: 3 };
@@ -114,6 +124,16 @@ const TaskList = () => {
       <h2>Your Tasks</h2>
       {error && <p className="error">{error}</p>}
       
+      {/* Search Bar */}
+      <div className="search-bar">
+        <input
+          type="text"
+          placeholder="Search tasks..."
+          value={searchQuery}
+          onChange={handleSearchChange}
+        />
+      </div>
+
       {/* Filter Section */}
       <div className="filter-sort">
         <select value={filterPriority} onChange={handleFilterPriorityChange}>
@@ -136,11 +156,11 @@ const TaskList = () => {
         </select>
       </div>
 
-      {sortedTasks.length === 0 ? (
+      {filteredTasks.length === 0 ? (
         <p>No tasks available.</p>
       ) : (
         <ul>
-          {sortedTasks.map((task) => (
+          {filteredTasks.map((task) => (
             <li key={task._id} className={task.completed ? "completed-task" : ""}>
               <h3>{task.title}</h3>
               <p>{task.description}</p>
