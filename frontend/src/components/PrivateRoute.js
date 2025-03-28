@@ -1,20 +1,13 @@
 import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
+const PrivateRoute = ({ element: Element, ...rest }) => {
   const isAuthenticated = localStorage.getItem('token'); // Check if token exists
 
-  return (
-    <Route
-      {...rest}
-      render={(props) =>
-        isAuthenticated ? (
-          <Component {...props} />
-        ) : (
-          <Redirect to="/login" /> // Redirect to login if not authenticated
-        )
-      }
-    />
+  return isAuthenticated ? (
+    <Element {...rest} />
+  ) : (
+    <Navigate to="/login" />
   );
 };
 
