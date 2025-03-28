@@ -1,14 +1,22 @@
 import React from 'react';
-import './App.css';
-import Login from './components/Login';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Auth from './components/Auth';
+import Dashboard from './components/Dashboard';
+import PrivateRoute from './components/PrivateRoute';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <h1>Task Management</h1>
-      <Login />
-    </div>
+    <Router>
+      <div className="App">
+        <Switch>
+          <Route path="/login" component={Auth} />
+          <Route path="/register" component={Auth} />
+          <PrivateRoute path="/dashboard" component={Dashboard} />
+          <Redirect from="/" to="/login" />
+        </Switch>
+      </div>
+    </Router>
   );
-}
+};
 
 export default App;
