@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Add this line
 import axios from 'axios';
 
 const Auth = () => {
@@ -8,6 +9,8 @@ const Auth = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+
+  const navigate = useNavigate(); // Initialize useNavigate at the top level of the component
 
   // Login Handler
   const handleLogin = async (e) => {
@@ -20,8 +23,16 @@ const Auth = () => {
         password,
       });
 
-      // Store token in local storage or cookies
+      // Store token and role in local storage
       localStorage.setItem('token', response.data.token);
+      localStorage.setItem('role', response.data.role); // Store role in localStorage
+
+      // Redirect based on the role returned by the backend
+      if (response.data.role === 'admin') {
+        navigate('/admin-dashboard'); // Redirect to Admin Dashboard if admin
+      } else {
+        navigate('/dashboard'); // Redirect to User Dashboard if regular user
+      }
 
       // Clear error and show success message
       setError('');
@@ -106,3 +117,4 @@ const Auth = () => {
 };
 
 export default Auth;
+// 

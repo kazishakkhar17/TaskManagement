@@ -1,6 +1,7 @@
 require("dotenv").config({ path: './.env' });  // Ensure path to .env is correct
 
 const express = require("express");
+const cookieParser = require('cookie-parser');
 const cors = require("cors");
 const mongoose = require("mongoose");
 const Task = require("./models/Task");  // Import Task model
