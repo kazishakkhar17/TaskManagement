@@ -1,0 +1,11 @@
+.filter-sort {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .filter-sort select {
+    padding: 5px;
+    font-size: 14px;
+  }
+  
