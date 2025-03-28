@@ -8,4 +8,10 @@
     padding: 5px;
     font-size: 14px;
   }
+
+  .completed-task {
+    text-decoration: line-through;
+    color: gray;
+  }
+  
   
