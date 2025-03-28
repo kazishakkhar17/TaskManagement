@@ -1,54 +1,46 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
-const User = require('../models/User');
+const User = require('../models/User'); // Import User model
 const router = express.Router();
+
+// Function to generate JWT token
+const generateToken = (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+};
 
 // Register new user
 router.post('/register', async (req, res) => {
   const { username, email, password } = req.body;
 
   try {
-    // Check if the user already exists
+    // Check if user already exists
     let user = await User.findOne({ email });
 
     if (user) {
       return res.status(400).json({ msg: 'User already exists' });
     }
 
-    // Hash password before saving
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-
-    // Create new user
+    // Create a new user (password will be hashed automatically)
     user = new User({
       username,
       email,
-      password: hashedPassword,  // Store hashed password
+      password, // No need to hash here, it's handled in the model
     });
 
     // Save user to the database
     await user.save();
 
-    // Create JWT payload
-    const payload = { user: { id: user.id } };
-
     // Generate JWT token
-    jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' }, (err, token) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).json({ msg: 'Server error' });
-      }
+    const token = generateToken(user._id);
 
-      // Set JWT as an HttpOnly cookie
-      res.cookie('token', token, { 
-        httpOnly: true, // Prevent access to cookie via JS
-        secure: process.env.NODE_ENV === 'production', // Only use secure cookies in production (HTTPS)
-        maxAge: 3600000, // Cookie expiration in 1 hour
-      });
-
-      res.json({ msg: 'Registration successful' });
+    // Set token as an HttpOnly cookie
+    res.cookie('token', token, {
+      httpOnly: true, // Prevent JavaScript access
+      secure: process.env.NODE_ENV === 'production', // Secure only in production
+      maxAge: 3600000, // 1 hour
     });
+
+    res.status(201).json({ msg: 'Registration successful', token });
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
@@ -56,39 +48,34 @@ router.post('/register', async (req, res) => {
 });
 
 // Login user
-router.post("/login", async (req, res) => {
-    const { email, password } = req.body;
-  
-    try {
-      // Find the user by email
-      const user = await User.findOne({ email });
-  
-      if (!user) {
-        return res.status(400).json({ msg: "Invalid credentials" });
-      }
-  
-      // Log the hashed password from the DB and the password being checked
-      console.log("Stored Hash:", user.password);
-      console.log("Password Attempt:", password);
-  
-      // Check if the provided password matches the stored hashed password
-      const isMatch = await user.matchPassword(password);
-      console.log("Password Match Result:", isMatch);
-  
-      if (!isMatch) {
-        return res.status(400).json({ msg: "Invalid credentials" });
-      }
-  
-      // If match, generate JWT token and send response
-      const token = generateToken(user._id);
-      res.json({ token });
-  
-    } catch (err) {
-      console.error(err.message);
-      res.status(500).json({ msg: "Server error" });
-    }
-  });
+router.post('/login', async (req, res) => {
+  const { email, password } = req.body;
 
-console.log('Auth routes loaded');  // Logs to ensure the file is loaded correctly
+  try {
+    // Find user by email
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(400).json({ msg: 'Invalid credentials' });
+    }
+
+    // Check if password matches
+    const isMatch = await user.matchPassword(password);
+
+    if (!isMatch) {
+      return res.status(400).json({ msg: 'Invalid credentials' });
+    }
+
+    // Generate JWT token
+    const token = generateToken(user._id);
+
+    res.json({ msg: 'Login successful', token });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ msg: 'Server error' });
+  }
+});
+
+console.log('Auth routes loaded');
 
 module.exports = router;
