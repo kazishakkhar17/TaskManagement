@@ -8,18 +8,25 @@ const CreateTask = () => {
   const [description, setDescription] = useState('');
   const [dueDate, setDueDate] = useState('');
   const [priority, setPriority] = useState('low');
-  const [category, setCategory] = useState('');
+  const [category, setCategory] = useState('Personal');  // Default category set to 'Personal'
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
   const navigate = useNavigate();
+
   const handleDashboard = () => {
-    
-    navigate('/Dashboard'); // Redirect user to the login page using navigate
+    navigate('/Dashboard'); // Redirect user to the dashboard
   };
+
   // Handle form submission to create a new task
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Validate if the category is valid
+    if (!category || !['Personal', 'Work', 'Study', 'Other'].includes(category)) {
+      setError('Please select a valid category.');
+      return;
+    }
 
     try {
       // Prepare the task data
@@ -31,10 +38,16 @@ const CreateTask = () => {
         category,
       };
 
+      // Get the token from localStorage
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('No token found in localStorage');
+      }
+
       // Send POST request to backend API to create task
       const response = await axios.post('http://localhost:5000/api/tasks', taskData, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`, // Send token for authentication
+          Authorization: `Bearer ${token}`, // Send token for authentication
         },
       });
 
@@ -45,8 +58,9 @@ const CreateTask = () => {
       setDescription('');
       setDueDate('');
       setPriority('low');
-      setCategory('');
+      setCategory('Personal'); // Reset to valid default category
     } catch (err) {
+      console.error('Error creating task:', err.response || err.message); // Log error details for debugging
       setError('Error creating task. Please try again.');
       setSuccess('');
     }
@@ -116,8 +130,6 @@ const CreateTask = () => {
       {error && <p className="error">{error}</p>}
       {success && <p className="success">{success}</p>}
     </div>
-    
-    
   );
 };
 

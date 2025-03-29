@@ -16,7 +16,7 @@ router.post('/', authMiddleware, async (req, res) => {
       dueDate,
       priority,
       category,
-      user: req.user.id, // Add user ID from auth middleware
+      user: req.user,  // Use the user ID directly (not req.user.id)
     });
 
     await task.save();
@@ -30,7 +30,7 @@ router.post('/', authMiddleware, async (req, res) => {
 // Get all tasks for the logged-in user
 router.get('/', authMiddleware, async (req, res) => {
   try {
-    const tasks = await Task.find({ user: req.user.id });
+    const tasks = await Task.find({ user: req.user });  // Use req.user directly
     res.json(tasks);
   } catch (err) {
     console.error(err.message);
@@ -45,6 +45,11 @@ router.get('/:id', authMiddleware, async (req, res) => {
 
     if (!task) {
       return res.status(404).json({ msg: 'Task not found' });
+    }
+
+    // Ensure that the task belongs to the logged-in user
+    if (task.user.toString() !== req.user) {
+      return res.status(401).json({ msg: 'Not authorized' });
     }
 
     res.json(task);
@@ -66,7 +71,7 @@ router.put('/:id', authMiddleware, async (req, res) => {
     }
 
     // Ensure the user can only update their own tasks
-    if (task.user.toString() !== req.user.id) {
+    if (task.user.toString() !== req.user) {
       return res.status(401).json({ msg: 'Not authorized' });
     }
 
@@ -93,7 +98,7 @@ router.delete('/:id', authMiddleware, async (req, res) => {
     }
 
     // Ensure the user can only delete their own tasks
-    if (task.user.toString() !== req.user.id) {
+    if (task.user.toString() !== req.user) {
       return res.status(401).json({ msg: 'Not authorized' });
     }
 
