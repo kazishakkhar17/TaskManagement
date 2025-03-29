@@ -16,7 +16,9 @@ app.use(express.urlencoded({ extended: true }));  // Parse incoming URL-encoded 
 app.use(cors({
   origin: 'http://localhost:3000',  // Replace with your frontend URL if different
   methods: 'GET,POST,PUT,DELETE',
-  allowedHeaders: 'Content-Type'
+  //allowedHeaders: 'Content-Type'
+  allowedHeaders: ['Content-Type', 'Authorization'],  // Add 'Authorization' here
+  credentials: true,
 }));
 
 // Import and use auth routes

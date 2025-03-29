@@ -18,7 +18,7 @@ const Auth = () => {
 
     try {
       // Sending POST request to backend for login
-      const response = await axios.post('http://localhost:5000/api/auth/login', {
+      const response = await axios.post('http://localhost:5000/auth/login', {
         email,
         password,
       });
@@ -50,7 +50,7 @@ const Auth = () => {
 
     try {
       // Sending POST request to backend for registration
-      const response = await axios.post('http://localhost:5000/api/auth/register', {
+      const response = await axios.post('http://localhost:5000/auth/register', {
         username,
         email,
         password,
