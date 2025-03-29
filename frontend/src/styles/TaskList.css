@@ -1,17 +1,163 @@
-.filter-sort {
+/* Container for the task list */
+.task-list-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #d1aadf;
+    border-radius: 8px;
+    background-color: #f9f3ff;
+    text-align: center;
+  }
+  
+  /* Title of the task list */
+  .task-list-container h2 {
+    color: #6a4c9c;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  /* Error message styling */
+  .error {
+    color: #ff4d4d;
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  
+  /* Search bar styling */
+  .search-bar input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 20px;
+    border: 1px solid #d1aadf;
+    border-radius: 4px;
+    background-color: #fff;
+  }
+  
+  /* Filter and sort section styling */
+  .filter-sort {
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
   }
   
   .filter-sort select {
-    padding: 5px;
-    font-size: 14px;
-  }
-
-  .completed-task {
-    text-decoration: line-through;
-    color: gray;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #d1aadf;
+    border-radius: 4px;
+    background-color: #fff;
   }
   
+  /* List of tasks styling */
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  ul li {
+    background-color: #fff;
+    padding: 15px;
+    margin: 10px 0;
+    border: 1px solid #d1aadf;
+    border-radius: 8px;
+    text-align: left;
+  }
+  
+  ul li.completed-task {
+    background-color: #e0e0e0;
+  }
+  
+  ul li h3 {
+    color: #6a4c9c;
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  ul li p {
+    color: #6a4c9c;
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+  
+  /* Button styling */
+  ul li button {
+    padding: 8px 15px;
+    margin-right: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 4px;
+    border: none;
+    background-color: #a98cdc;
+    color: white;
+  }
+  
+  ul li button:hover {
+    background-color: #6a4c9c;
+  }
+  
+  /* Delete button with red color */
+  ul li button:hover {
+    background-color: #ff4d4d;
+  }
+  
+  ul li button:focus {
+    outline: none;
+  }
+  
+  /* Mark as completed/pending button */
+  ul li button:active {
+    background-color: #6a4c9c;
+  }
+  
+
+  /* New buttons container */
+.task-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  /* Styling for the new buttons */
+  .task-actions button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    border: none;
+    background-color: #a98cdc;
+    color: white;
+    width: 48%;
+  }
+  
+  .task-actions button:hover {
+    background-color: #6a4c9c;
+  }
+  
+  .task-actions button:focus {
+    outline: none;
+  }
+  
+  .task-actions button:active {
+    background-color: #6a4c9c;
+  }
+  
+  /* Optional: Styling for Create New Task button */
+  .task-actions .create-task {
+    background-color: #4caf50; /* Green color for create task */
+  }
+  
+  .task-actions .create-task:hover {
+    background-color: #45a049; /* Darker green for hover */
+  }
+  
+  /* Optional: Styling for Back to Dashboard button */
+  .task-actions .back-dashboard {
+    background-color: #ff9800; /* Orange color for back to dashboard */
+  }
+  
+  .task-actions .back-dashboard:hover {
+    background-color: #fb8c00; /* Darker orange for hover */
+  }
   

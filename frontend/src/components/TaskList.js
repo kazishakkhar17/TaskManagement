@@ -1,7 +1,7 @@
 import '../styles/TaskList.css';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const TaskList = () => {
   const [tasks, setTasks] = useState([]);
@@ -11,6 +11,8 @@ const TaskList = () => {
   const [filterCategory, setFilterCategory] = useState('all'); // For filtering by category
   const [sort, setSort] = useState('dueDate'); // Default sort by due date
   const [searchQuery, setSearchQuery] = useState(''); // State for search query
+
+  const navigate = useNavigate();
 
   // Fetch Tasks
   const fetchTasks = async () => {
@@ -181,6 +183,12 @@ const TaskList = () => {
           ))}
         </ul>
       )}
+
+      {/* New Buttons */}
+      <div className="task-actions">
+        <button onClick={() => navigate('/create-task')}>Create New Task</button>
+        <button onClick={() => navigate('/dashboard')}>Back to Dashboard</button>
+      </div>
     </div>
   );
 };

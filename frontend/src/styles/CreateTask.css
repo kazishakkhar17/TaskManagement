@@ -1,0 +1,91 @@
+/* Container for the Create Task form */
+.create-task-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #d1aadf;
+    border-radius: 8px;
+    background-color: #f9f3ff;
+    text-align: center;
+}
+
+/* Title of the Create Task form */
+.create-task-container h2 {
+    color: #6a4c9c;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* Form field labels */
+.create-task-container label {
+    display: block;
+    color: #6a4c9c;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+/* Form inputs and select dropdown */
+.create-task-container input,
+.create-task-container textarea,
+.create-task-container select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 20px;
+    border: 1px solid #d1aadf;
+    border-radius: 4px;
+    background-color: #fff;
+}
+
+/* Button styling */
+.create-task-container button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #a98cdc;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Button hover effect */
+.create-task-container button:hover {
+    background-color: #6a4c9c;
+}
+
+/* Container for the Dashboard button */
+.Dashboard {
+    margin-top: 20px;
+    text-align: center;
+}
+
+/* Dashboard button styling */
+.Dashboard button {
+    padding: 12px 25px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Dashboard button hover effect */
+.Dashboard button:hover {
+    background-color: #0056b3;
+}
+
+/* Error message styling */
+.error {
+    color: #ff4d4d;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+/* Success message styling */
+.success {
+    color: #28a745;
+    font-size: 16px;
+    margin-top: 20px;
+}

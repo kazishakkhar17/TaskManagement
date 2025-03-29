@@ -1,3 +1,5 @@
+import '../styles/CreateTask.css';
+import { Link, useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
 import axios from 'axios';
 
@@ -10,6 +12,11 @@ const CreateTask = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
+  const navigate = useNavigate();
+  const handleDashboard = () => {
+    
+    navigate('/Dashboard'); // Redirect user to the login page using navigate
+  };
   // Handle form submission to create a new task
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -97,10 +104,15 @@ const CreateTask = () => {
         </div>
         <button type="submit">Create Task</button>
       </form>
+      <div className="Dashboard">
+        <button onClick={handleDashboard}>Dashboard</button>
+      </div>
 
       {error && <p className="error">{error}</p>}
       {success && <p className="success">{success}</p>}
     </div>
+    
+    
   );
 };
 
