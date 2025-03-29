@@ -1,0 +1,105 @@
+/* AdminDashboard.css */
+
+/* Overall container styling */
+div {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #f9f9f9;
+    max-width: 800px;
+    margin: 0 auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+  
+/* Header styling */
+h1 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 10px;
+    text-align: center;
+}
+  
+h2 {
+    font-size: 1.5rem;
+    color: #555;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Button styling */
+button {
+    background-color: #7b6dbc;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    display: block;
+    width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+button:hover {
+    background-color: #8671bd;
+}
+
+button:focus {
+    outline: none;
+}
+
+button:active {
+    background-color: #c7a4e7;
+}
+
+/* Small screen responsiveness */
+@media (max-width: 600px) {
+    div {
+      padding: 15px;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+    }
+
+    h2 {
+      font-size: 1.2rem;
+    }
+
+    table {
+      width: 100%;
+      font-size: 0.9rem;
+    }
+
+    th, td {
+      padding: 8px;
+    }
+
+    button {
+      width: 100%;
+    }
+}

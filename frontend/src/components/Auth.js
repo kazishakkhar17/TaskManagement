@@ -15,36 +15,80 @@ const Auth = () => {
   const navigate = useNavigate(); // Initialize useNavigate at the top level of the component
 
   // Login Handler
+  // const handleLogin = async (e) => {
+  //   e.preventDefault();
+
+  //   try {
+  //     // Sending POST request to backend for login
+  //     const response = await axios.post('http://localhost:5000/auth/login', {
+  //       email,
+  //       password,
+  //     });
+
+  //     // Store token and role in local storage
+  //     localStorage.setItem('token', response.data.token);
+  //     localStorage.setItem('role', response.data.role); // Store role in localStorage
+
+  //     // Redirect based on the role returned by the backend
+  //     if (response.data.role === 'admin') {
+  //       navigate('/admin-dashboard'); // Redirect to Admin Dashboard if admin
+  //     } else {
+  //       navigate('/dashboard'); // Redirect to User Dashboard if regular user
+  //     }
+
+  //     // Clear error and show success message
+  //     setError('');
+  //     setSuccess('Login Successful!');
+
+  //   } catch (err) {
+  //     setError('Invalid credentials or server error.');
+  //     setSuccess('');
+  //   }
+  // };
+
   const handleLogin = async (e) => {
     e.preventDefault();
-
+  
     try {
-      // Sending POST request to backend for login
-      const response = await axios.post('http://localhost:5000/auth/login', {
-        email,
-        password,
-      });
-
-      // Store token and role in local storage
-      localStorage.setItem('token', response.data.token);
-      localStorage.setItem('role', response.data.role); // Store role in localStorage
-
-      // Redirect based on the role returned by the backend
-      if (response.data.role === 'admin') {
-        navigate('/admin-dashboard'); // Redirect to Admin Dashboard if admin
-      } else {
-        navigate('/dashboard'); // Redirect to User Dashboard if regular user
+      // Sending request to backend
+      const response = await axios.post('http://localhost:5000/auth/login', { email, password });
+  
+      //  Debugging: Log full response
+      //console.log("Server Response:", response.data); 
+  
+      //  Check if 'role' exists
+      //console.log("Role from Backend:", response.data.role); 
+  
+      if (!response.data.role) {
+        console.error(" Role is missing in response! Check backend.");
+        setError("Role not received. Please check backend.");
+        return;
       }
-
-      // Clear error and show success message
+  
+      // Store token and role
+      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('role', response.data.role);
+  
+      // ✅ Debugging: Verify storage
+      console.log("Stored Role in LocalStorage:", localStorage.getItem("role"));
+  
+      // Redirect based on role
+      if (response.data.role === 'admin') {
+        navigate('/admin-dashboard');
+      } else {
+        navigate('/dashboard');
+      }
+  
       setError('');
       setSuccess('Login Successful!');
-
+  
     } catch (err) {
+      console.error("Login Error:", err.response ? err.response.data : err.message);
       setError('Invalid credentials or server error.');
       setSuccess('');
     }
   };
+  
 
   // Register Handler
   const handleRegister = async (e) => {

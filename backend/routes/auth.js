@@ -8,6 +8,22 @@ const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 };
 
+//const express = require("express");
+//const router = express.Router();
+//const User = require("../models/User"); // Ensure you have a User model
+
+// Route to get all users (Admin Only)
+router.get("/users", async (req, res) => {
+    try {
+        const users = await User.find(); // Fetch all users from DB
+        res.status(200).json(users);
+    } catch (err) {
+        res.status(500).json({ message: "Error fetching users", error: err.message });
+    }
+});
+
+module.exports = router;
+
 // Register new user
 router.post('/register', async (req, res) => {
   const { username, email, password } = req.body;
@@ -69,7 +85,12 @@ router.post('/login', async (req, res) => {
     // Generate JWT token
     const token = generateToken(user._id);
 
-    res.json({ msg: 'Login successful', token });
+    //res.json({ msg: 'Login successful', token });
+    res.json({ 
+        msg: 'Login successful', 
+        token, 
+        role: user.role //  Add this line 
+      });
   } catch (err) {
     console.error(err.message);
     res.status(500).json({ msg: 'Server error' });
