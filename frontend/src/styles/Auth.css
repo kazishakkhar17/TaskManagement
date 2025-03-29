@@ -1,0 +1,85 @@
+/* Container for the authentication form */
+.auth-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #d1aadf; 
+    border-radius: 8px;
+    background-color: #f9f3ff; 
+  }
+  
+  /* Title for the form */
+  .auth-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #6a4c9c; 
+  }
+  
+  /* Label styling */
+  .auth-container label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #6a4c9c; 
+  }
+  
+  /* Input field styling */
+  .auth-container input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #d1aadf; 
+    border-radius: 4px;
+    background-color: white; 
+    color: #6a4c9c; 
+  }
+  
+  /* Button styling */
+  .auth-container button {
+    width: 100%;
+    padding: 10px;
+    background-color: #a98cdc; 
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .auth-container button:hover {
+    background-color: #6a4c9c; 
+  }
+  
+  /* Error message styling */
+  .auth-container .error {
+    color: red;
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  /* Success message styling */
+  .auth-container .success {
+    color: green;
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  /* Paragraph styling for links or additional text */
+  .auth-container p {
+    text-align: center;
+    font-size: 14px;
+  }
+  
+  .auth-container p button {
+    background-color: transparent;
+    color: #6a4c9c; 
+    border: none;
+    cursor: pointer;
+  }
+  
+  .auth-container p button:hover {
+    text-decoration: underline;
+    color: #a98cdc; 
+  }
+  

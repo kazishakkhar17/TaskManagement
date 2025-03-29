@@ -1,0 +1,63 @@
+/* Container for the Dashboard */
+.dashboard {
+    width: 100%;
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #d1aadf; 
+    border-radius: 8px;
+    background-color: #f9f3ff; 
+    text-align: center;
+  }
+  
+  /* Heading for the dashboard */
+  .dashboard h2 {
+    color: #6a4c9c; 
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  /* Paragraph for description */
+  .dashboard p {
+    color: #6a4c9c; 
+    font-size: 16px;
+    margin-bottom: 30px;
+  }
+  
+  /* Container for the action buttons (Create Task and View Tasks) */
+  .dashboard-actions {
+    margin-bottom: 20px;
+  }
+  
+  /* Action buttons styling */
+  .dashboard-actions button {
+    padding: 10px 20px;
+    margin: 10px;
+    background-color: #a98cdc;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .dashboard-actions button:hover {
+    background-color: #6a4c9c; 
+  }
+  
+  /* Styling for the logout button */
+  .logout button {
+    padding: 10px 20px;
+    background-color: #ff4d4d; 
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 30px;
+  }
+  
+  .logout button:hover {
+    background-color: #ff1a1a; 
+  }
+  
