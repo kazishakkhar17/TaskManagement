@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: true }));  // Parse incoming URL-encoded 
 // CORS setup to allow specific frontend requests
 app.use(cors({
   origin: 'http://localhost:3000',  // Replace with your frontend URL if different
-  methods: 'GET,POST,PUT,DELETE',
+  methods: 'GET,POST,PUT,PATCH,DELETE',
   //allowedHeaders: 'Content-Type'
   allowedHeaders: ['Content-Type', 'Authorization'],  // Add 'Authorization' here
   credentials: true,

@@ -1,3 +1,5 @@
+import '../styles/TaskUpdate.css';
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -122,6 +124,11 @@ const TaskUpdate = () => {
 
       {error && <p className="error">{error}</p>}
       {success && <p className="success">{success}</p>}
+
+      {/* Back to Task List Button */}
+      <div className="Dashboard">
+        <button onClick={() => navigate('/task-list')}>Back to Task List</button>
+      </div>
     </div>
   );
 };
