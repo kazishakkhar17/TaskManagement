@@ -41,6 +41,8 @@ const taskSchema = new mongoose.Schema({
   },
   category: {
     type: String,
+    enum: ['Personal', 'Work', 'Study', 'Other'],
+    default: 'Other',
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,

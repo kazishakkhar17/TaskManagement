@@ -126,7 +126,19 @@ app.patch("/api/tasks/:id", async (req, res) => {
     }
   });
   
-
+  app.get("/api/tasks/:id", async (req, res) => {
+    try {
+      const task = await Task.findById(req.params.id);  // Fetch a specific task by ID
+      if (!task) {
+        return res.status(404).json({ message: "Task not found" });
+      }
+      res.status(200).json(task);  // Send the task as a JSON response
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).json({ message: err.message || "Some error occurred while retrieving task." });
+    }
+  });
+  
 // DELETE route to delete a task
 app.delete("/api/tasks/:id", async (req, res) => {
   const { id } = req.params;  // Get task ID from URL parameter

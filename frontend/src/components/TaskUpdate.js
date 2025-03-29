@@ -113,11 +113,16 @@ const TaskUpdate = () => {
         </div>
         <div>
           <label>Category</label>
-          <input
-            type="text"
+          <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-          />
+            required
+          >
+            <option value="Personal">Personal</option>
+            <option value="Work">Work</option>
+            <option value="Study">Study</option>
+            <option value="Other">Other</option>
+          </select>
         </div>
         <button type="submit">Update Task</button>
       </form>
