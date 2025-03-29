@@ -93,21 +93,26 @@ const TaskList = () => {
 
   // Apply filtering, searching, and sorting
   const filteredTasks = tasks
-    .filter((task) => (filterPriority === 'all' ? true : task.priority === filterPriority))
-    .filter((task) => (filterCategory === 'all' ? true : task.category === filterCategory))
-    .filter((task) => {
-      return task.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-             task.description.toLowerCase().includes(searchQuery.toLowerCase());
-    })
-    .sort((a, b) => {
-      if (sort === 'priority') {
-        const priorities = { low: 1, medium: 2, high: 3 };
-        return priorities[a.priority] - priorities[b.priority];
-      } else if (sort === 'dueDate') {
-        return new Date(a.dueDate) - new Date(b.dueDate);
-      }
-      return 0;
-    });
+  .filter((task) => (filterPriority === 'all' ? true : task.priority === filterPriority))
+  .filter((task) => {
+    // Ensure that we're handling cases where category might be 'Other' or undefined
+    if (filterCategory === 'all') return true;
+    return task.category?.toLowerCase() === filterCategory.toLowerCase(); // Case-insensitive comparison
+  })
+  .filter((task) => {
+    return task.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+           task.description.toLowerCase().includes(searchQuery.toLowerCase());
+  })
+  .sort((a, b) => {
+    if (sort === 'priority') {
+      const priorities = { low: 1, medium: 2, high: 3 };
+      return priorities[a.priority] - priorities[b.priority];
+    } else if (sort === 'dueDate') {
+      return new Date(a.dueDate) - new Date(b.dueDate);
+    }
+    return 0;
+  });
+
 
   useEffect(() => {
     fetchTasks();
@@ -150,6 +155,7 @@ const TaskList = () => {
           <option value="work">Work</option>
           <option value="personal">Personal</option>
           <option value="study">Study</option>
+          <option value="other">Other</option>
         </select>
 
         <select value={sort} onChange={handleSortChange}>

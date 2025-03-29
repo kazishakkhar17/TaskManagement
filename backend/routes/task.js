@@ -1,3 +1,6 @@
+
+
+// module.exports = router;
 // routes/task.js
 const express = require('express');
 const Task = require('../models/Task');
@@ -27,16 +30,19 @@ router.post('/', authMiddleware, async (req, res) => {
   }
 });
 
-// Get all tasks for the logged-in user
 router.get('/', authMiddleware, async (req, res) => {
-  try {
-    const tasks = await Task.find({ user: req.user });  // Use req.user directly
-    res.json(tasks);
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server error');
-  }
-});
+    try {
+      console.log('Fetching tasks for user ID:', req.user); // Debugging log
+  
+      const tasks = await Task.find({ user: req.user }); // Ensure tasks are filtered
+      console.log('Tasks found:', tasks); // Log tasks fetched
+  
+      res.json(tasks);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server error');
+    }
+  });
 
 // Get task by ID
 router.get('/:id', authMiddleware, async (req, res) => {
