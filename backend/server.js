@@ -101,6 +101,32 @@ app.put("/api/tasks/:id", async (req, res) => {
   }
 });
 
+// PATCH route to update a task (for partial updates)
+app.patch("/api/tasks/:id", async (req, res) => {
+    const { id } = req.params; // Get task ID from URL parameter
+    const { title, description, dueDate, priority, category, completed, user } = req.body;
+  
+    try {
+      const updatedTask = await Task.findByIdAndUpdate(
+        id, // Find task by its ID
+        { title, description, dueDate, priority, category, completed, user }, // Fields to update
+        { new: true } // Return updated document
+      );
+  
+      if (!updatedTask) {
+        return res.status(404).json({ message: "Task not found" });
+      }
+  
+      res.status(200).json(updatedTask); // Send the updated task as a JSON response
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).json({
+        message: err.message || "Some error occurred while updating the task."
+      });
+    }
+  });
+  
+
 // DELETE route to delete a task
 app.delete("/api/tasks/:id", async (req, res) => {
   const { id } = req.params;  // Get task ID from URL parameter
