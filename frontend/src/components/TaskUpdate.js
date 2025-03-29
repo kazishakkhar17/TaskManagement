@@ -28,7 +28,7 @@ const TaskUpdate = () => {
         const task = response.data;
         setTitle(task.title);
         setDescription(task.description);
-        setDueDate(task.dueDate);
+        setDueDate(task.dueDate.slice(0,10));//setDueDate(task.dueDate.slice(0, 10)); // Extract the date part (yyyy-MM-dd)
         setPriority(task.priority);
         setCategory(task.category);
       } else {
