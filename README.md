@@ -1,40 +1,30 @@
-Task Management Application
+# Secure Task Management System
 
-A web application that allows users to manage tasks with features like authentication, task creation, and an admin dashboard.
+A web application that allows users to manage tasks with features like authentication, task creation, task update, search, sort and an admin dashboard.
 
-Features
-User Authentication: Login and register functionality with JWT authentication.
+## Features
 
-Task Management: Users can create, view, and update tasks.
+### User Authentication
+- Login and register functionality with JWT authentication.
 
-Admin Dashboard: Admins can access a dashboard to manage users and tasks.
+### Task Management
+- Users can create, view, and update tasks.
 
-Protected Routes: Only authenticated users can access specific routes, with admin-specific routes for admins.
+### Additional Features
+- Users Search , Sort based on category, Priority.
 
-Installation
-Clone the repository:
 
-bash
-Copy
-Edit
-git clone https://github.com/your-username/your-repository.git
-Install dependencies:
+### Admin Dashboard
+- Admins can access a dashboard to manage users and tasks.
 
-bash
-Copy
-Edit
+### Protected Routes
+- Only authenticated users can access specific routes, with admin-specific routes for admins.
+
+## Installation
+
+### Clone the repository:
+
+```bash
+git clone (https://github.com/kazishakkhar17/TaskManagement.git)
 npm install
-Start the application:
-
-bash
-Copy
-Edit
 npm start
-Visit http://localhost:3000 in your browser.
-
-Technologies Used
-Frontend: React, React Router
-
-Backend: Node.js (Express)
-
-Authentication: JWT
