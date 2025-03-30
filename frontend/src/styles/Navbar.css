@@ -1,0 +1,72 @@
+/* General Navbar Styles */
+.navbar {
+    background: linear-gradient(135deg, #b09dff, #7a6aff);
+    padding: 8px 10px;
+    display: flex;
+    justify-content: center; /* Center all items */
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: 38px;
+}
+
+/* Navbar Container for Flex */
+.navbar-container {
+    display: flex;
+    justify-content: center; /* Center the items inside the navbar */
+    align-items: center;
+    width: 100%;
+}
+
+/* Logo Style */
+.navbar-logo {
+    font-size: 24px;
+    color: rgb(45, 29, 104);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Navbar Links */
+.navbar-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    margin: 0;
+    padding: 0;
+    align-items: center;  /* Ensure vertical alignment */
+    position: absolute; /* This ensures the links stay on the right */
+    right: 10px; /* Adjust the right position to your preference */
+}
+
+/* Navbar Link Style */
+.navbar-link {
+    text-decoration: none;
+    color: rgb(112, 106, 167);
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+.navbar-link:hover {
+    color: #876bae;
+}
+
+/* Responsive Design for Small Screens */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .navbar-links {
+        flex-direction: column;
+        gap: 10px;
+        position: static; /* Make navbar links stack in column for small screens */
+        right: auto;
+    }
+
+    .navbar-link {
+        font-size: 18px;
+    }
+}
